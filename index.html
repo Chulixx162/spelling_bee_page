@@ -207,6 +207,16 @@
           transform: scale(1);
         }
       }
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+          transform: scale(1);
+        }
+        to {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+      }
 
       footer {
         background-color: #ffcc00;
@@ -263,7 +273,10 @@
   <body>
     <header>
       <img src="assets/img/bee.png" alt="Abeja" class="logo" />
-      <h1>Spelling Bee</h1>
+      <h1>
+        &bull; Spelling Bee <span class="year"></span> &bull; <br>
+        Institución Educativa Misael Pastrana Borrero
+      </h1>
       <img
         src="assets/img/Misael Pastrana PNG.png"
         alt="Logo Colegio"
@@ -303,38 +316,175 @@
     <footer>
       &copy; Institución Educativa Misael Pastrana Borrero, sede Misael Pastrana
       Borrero <br />
-      <span id="year"></span> | Hora: <span id="time"></span>
+      <span class="year"></span> | Hora: <span id="time"></span>
     </footer>
 
     <script>
       const categoryA = [
-        "apple",
-        "banana",
-        "cat",
-        "dog",
-        "elephant",
-        "fish",
-        "grape",
-        "hat",
-        "ice",
-        "jungle",
+        "ADMIT",
+        "MONUMENTAL",
+        "BACKGROUND",
+        "MOUTH",
+        "BASEMENT",
+        "NAPKIN",
+        "BEESWAX",
+        "NECKLACE",
+        "BRILLIANT",
+        "PEPPERMINT",
+        "CANDLES",
+        "PIECES",
+        "CLEVER",
+        "POND",
+        "CLIFF",
+        "POWDER",
+        "CROWD",
+        "PROOF",
+        "CUCUMBER",
+        "PUPPETS",
+        "DENY",
+        "PUZZLES",
+        "DIMENSION",
+        "RELIABLE",
+        "EXPLOSIVE",
+        "REPLY",
+        "FLAME",
+        "SEAL",
+        "FORBIDDEN",
+        "SECRET",
+        "FORGIVE",
+        "SHADOW",
+        "FROZEN",
+        "SHAKE",
+        "FUMBLE",
+        "SKATEBOARD",
+        "GIANT",
+        "SNIFFLE",
+        "GYMNASTICS",
+        "SOFTWARE",
+        "HEALTH",
+        "STUBBORN",
+        "ICEBERG",
+        "STUNT",
+        "INSIDE",
+        "SUNFLOWER",
+        "ISLAND",
+        "THUNDERBOLT",
+        "JANUARY",
+        "TOWN",
+        "JOYFUL",
+        "TWIRL",
+        "LADYBUG",
+        "UNDERSTAND",
+        "LANDMARK",
+        "WEAKNESS",
+        "MANGER",
+        "WEATHER",
+        "MARVELOUS",
+        "WORKHORSE",
       ];
-      const categoryB = [
-            "AGREEMENT", "DYNAMITE", "JUPITER", "PROSPECTOR", "ANGULAR", "EMOTION", "KNOWLEDGE", "PROSPEROUS",
-            "ANNOUNCE", "ENGAGEMENT", "LATENCY", "PSYCHIC", "APOCALYPSE", "ENTERTAINMENT", "LUCRATIVE", "PURIFICATION",
-            "ARCHERY", "EQUILIBRIUM", "MICROORGANISM", "QUESTIONNAIRE", "ATMOSPHERE", "ESTABLISHMENT", "MULTITUDE", "RECRUIT",
-            "AUDITORIUM", "EXHIBITION", "MUSCLE", "RELUCTANT", "AWARENESS", "EXPOSURE", "MYSTERIOUS", "SAUCE",
-            "BISCUIT", "EXTERMINATE", "NUMEROLOGY", "SCULPTURE", "BUDGET", "EXTINGUISH", "OPPORTUNITY", "SEATBELT",
-            "CAFFEINE", "FANTASY", "OVERWEIGHT", "SKATEBOARDING", "CALORIES", "FLIGHT", "OYSTER", "SOLITAIRE",
-            "CHILDHOOD", "FLUENCY", "PASSAGE", "SOUNDTRACK", "CITIZENSHIP", "FORECAST", "PASSWORD", "SUFFICIENCY",
-            "COARSE", "FORGIVENESS", "POSSESSION", "SUPREMACY", "CONFESS", "GEESE", "PUNISHMENT", "SWALLOW",
-            "CORPULENT", "GEOGRAPHY", "SKYSCRAPER", "SWIMMER", "COURAGE", "GLASSES", "PEACEKEEPER", "SYLLABUS",
-            "CREATURE", "GLOVES", "PERCEPTIBLE", "SYMPATHY", "CRIMINAL", "GRAVITY", "PITCH", "TERRITORY",
-            "CROCODILE", "GUILTY", "PLAGIARISM", "THUNDERSTORM", "CRYSTAL", "HERITAGE", "PRELIMINARY", "UNFORGETTABLE",
-            "CYBERSPACE", "HESITATE", "PROCEDURE", "VEGETARIAN", "DEFENSE", "ILLEGAL", "PRODIGIOUS", "VENUE",
-            "DISPOSITION", "INDOLENT", "PROFILE", "WARRIOR"
-        ];
 
+      const categoryB = [
+        "AGREEMENT",
+        "DYNAMITE",
+        "JUPITER",
+        "PROSPECTOR",
+        "ANGULAR",
+        "EMOTION",
+        "KNOWLEDGE",
+        "PROSPEROUS",
+        "ANNOUNCE",
+        "ENGAGEMENT",
+        "LATENCY",
+        "PSYCHIC",
+        "APOCALYPSE",
+        "ENTERTAINMENT",
+        "LUCRATIVE",
+        "PURIFICATION",
+        "ARCHERY",
+        "EQUILIBRIUM",
+        "MICROORGANISM",
+        "QUESTIONNAIRE",
+        "ATMOSPHERE",
+        "ESTABLISHMENT",
+        "MULTITUDE",
+        "RECRUIT",
+        "AUDITORIUM",
+        "EXHIBITION",
+        "MUSCLE",
+        "RELUCTANT",
+        "AWARENESS",
+        "EXPOSURE",
+        "MYSTERIOUS",
+        "SAUCE",
+        "BISCUIT",
+        "EXTERMINATE",
+        "NUMEROLOGY",
+        "SCULPTURE",
+        "BUDGET",
+        "EXTINGUISH",
+        "OPPORTUNITY",
+        "SEATBELT",
+        "CAFFEINE",
+        "FANTASY",
+        "OVERWEIGHT",
+        "SKATEBOARDING",
+        "CALORIES",
+        "FLIGHT",
+        "OYSTER",
+        "SOLITAIRE",
+        "CHILDHOOD",
+        "FLUENCY",
+        "PASSAGE",
+        "SOUNDTRACK",
+        "CITIZENSHIP",
+        "FORECAST",
+        "PASSWORD",
+        "SUFFICIENCY",
+        "COARSE",
+        "FORGIVENESS",
+        "POSSESSION",
+        "SUPREMACY",
+        "CONFESS",
+        "GEESE",
+        "PUNISHMENT",
+        "SWALLOW",
+        "CORPULENT",
+        "GEOGRAPHY",
+        "SKYSCRAPER",
+        "SWIMMER",
+        "COURAGE",
+        "GLASSES",
+        "PEACEKEEPER",
+        "SYLLABUS",
+        "CREATURE",
+        "GLOVES",
+        "PERCEPTIBLE",
+        "SYMPATHY",
+        "CRIMINAL",
+        "GRAVITY",
+        "PITCH",
+        "TERRITORY",
+        "CROCODILE",
+        "GUILTY",
+        "PLAGIARISM",
+        "THUNDERSTORM",
+        "CRYSTAL",
+        "HERITAGE",
+        "PRELIMINARY",
+        "UNFORGETTABLE",
+        "CYBERSPACE",
+        "HESITATE",
+        "PROCEDURE",
+        "VEGETARIAN",
+        "DEFENSE",
+        "ILLEGAL",
+        "PRODIGIOUS",
+        "VENUE",
+        "DISPOSITION",
+        "INDOLENT",
+        "PROFILE",
+        "WARRIOR",
+      ];
 
       let currentCategory = [];
       let selectedCategory = "";
@@ -383,13 +533,22 @@
           });
           return;
         }
+
         document.getElementById("modalNumber").textContent = `#${index + 1}`;
         document.getElementById("modalWord").textContent =
           currentCategory[index];
+
         currentAudio = new Audio(
           `assets/audios/${selectedCategory}_${index + 1}.mp3`
         );
-        document.getElementById("wordModal").style.display = "flex";
+
+        const modal = document.getElementById("wordModal");
+        const modalContent = modal.querySelector(".modal-content");
+
+        // Restablece la animación para la entrada
+        modalContent.style.animation = "fadeIn 0.3s ease-in-out forwards";
+
+        modal.style.display = "flex";
       }
 
       function playAudio() {
@@ -408,13 +567,37 @@
       }
 
       function closeModal() {
-        document.getElementById("wordModal").style.display = "none";
-        if (currentAudio) {
-          currentAudio.pause();
-          currentAudio.currentTime = 0;
-        }
+        const modal = document.getElementById("wordModal");
+        const modalContent = modal.querySelector(".modal-content");
+
+        // Aplica la animación de salida
+        modalContent.style.animation = "fadeOut 0.3s ease-in-out forwards";
+
+        // Espera a que termine la animación antes de ocultar el modal
+        setTimeout(() => {
+          modal.style.display = "none";
+          modalContent.style.animation = "fadeIn 0.3s ease-in-out forwards"; // restablece animación de entrada para la próxima vez
+          if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+          }
+        }, 300); // 300ms = duración de la animación
       }
 
+      function closeModal() {
+        const modal = document.getElementById("wordModal");
+        const modalContent = modal.querySelector(".modal-content");
+
+        modalContent.style.animation = "fadeOut 0.3s ease-in-out forwards";
+
+        setTimeout(() => {
+          modal.style.display = "none";
+          if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+          }
+        }, 300); // espera a que termine la animación
+      }
       function searchWord() {
         const num = parseInt(document.getElementById("search-number").value);
         const maxNum = selectedCategory === "B" ? 100 : 60;
@@ -438,7 +621,10 @@
         }
       };
 
-      document.getElementById("year").textContent = new Date().getFullYear();
+      const years = document.getElementsByClassName("year");
+      for (let i = 0; i < years.length; i++) {
+        years[i].textContent = new Date().getFullYear();
+      }
 
       function updateTime() {
         const options = {
