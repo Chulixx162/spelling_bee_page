@@ -275,7 +275,7 @@
       <img src="assets/img/bee.png" alt="Abeja" class="logo" />
       <h1>
         &bull; Spelling Bee <span class="year"></span> &bull; <br>
-        Institución Educativa Misael Pastrana Borrero
+        Misael Pastrana Borrero Educational Institution
       </h1>
       <img
         src="assets/img/Misael Pastrana PNG.png"
@@ -285,8 +285,8 @@
     </header>
 
     <div class="category-buttons">
-      <button onclick="loadCategory('A')">Categoría A</button>
-      <button onclick="loadCategory('B')">Categoría B</button>
+      <button onclick="loadCategory('A')">Category A</button>
+      <button onclick="loadCategory('B')">Category B</button>
     </div>
 
     <div id="category-title"></div>
@@ -295,28 +295,27 @@
       <input
         type="number"
         id="search-number"
-        placeholder="Número"
+        placeholder="Number"
         min="1"
         max="100"
       />
-      <button onclick="searchWord()">Buscar</button>
+      <button onclick="searchWord()">Search</button>
     </div>
 
     <div id="grid-container" class="grid"></div>
 
     <div id="wordModal" class="modal">
       <div class="modal-content">
-        <div id="modalNumber">Número</div>
-        <h2 id="modalWord">Palabra</h2>
-        <button class="play-btn" onclick="playAudio()">🔊 Reproducir</button>
-        <button class="close-btn" onclick="closeModal()">Cerrar</button>
+        <div id="modalNumber">Number</div>
+        <h2 id="modalWord">Word</h2>
+        <button class="play-btn" onclick="playAudio()">🔊 Listen</button>
+        <button class="close-btn" onclick="closeModal()">Close</button>
       </div>
     </div>
 
     <footer>
-      &copy; Institución Educativa Misael Pastrana Borrero, sede Misael Pastrana
-      Borrero <br />
-      <span class="year"></span> | Hora: <span id="time"></span>
+      &copy; Misael Pastrana Borrero Educational Institution<br />
+      <span class="year"></span> | Time: <span id="time"></span>
     </footer>
 
     <script>
@@ -496,7 +495,7 @@
 
         Swal.fire({
           icon: "info",
-          title: `Has seleccionado Categoría ${category}`,
+          title: `You have selected Category ${category}`,
           confirmButtonColor: "#ffcc00",
           color: "#333",
           background: "#fffbe6",
@@ -506,7 +505,7 @@
 
         document.getElementById(
           "category-title"
-        ).textContent = `Categoría ${category}`;
+        ).textContent = `Category ${category}`;
         document.getElementById("search-container").style.display = "block";
 
         const gridContainer = document.getElementById("grid-container");
@@ -525,7 +524,7 @@
         if (!currentCategory[index]) {
           Swal.fire({
             icon: "warning",
-            text: "No hay palabra asignada para este número.",
+            text: "There is no word for this number.",
             confirmButtonColor: "#ffcc00",
             background: "#fffbe6",
             allowEscapeKey: false,
@@ -556,7 +555,7 @@
           currentAudio.play().catch(() => {
             Swal.fire({
               icon: "error",
-              text: "No se encontró el audio para esta palabra.",
+              text: "No audio was found for this word.",
               confirmButtonColor: "#ffcc00",
               background: "#fffbe6",
               allowEscapeKey: false,
@@ -604,7 +603,7 @@
         if (isNaN(num) || num < 1 || num > maxNum) {
           Swal.fire({
             icon: "warning",
-            text: `Ingresa un número válido entre 1 y ${maxNum}.`,
+            text: `Enter a number between 1 and ${maxNum}.`,
             confirmButtonColor: "#ffcc00",
             background: "#fffbe6",
             allowEscapeKey: false,
