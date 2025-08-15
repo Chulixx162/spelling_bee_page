@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spelling Bee</title>
+    <link
+      rel="icon"
+      href="assets/img/Misael Pastrana PNG.png"
+      type="image/png"
+    />
+    <script src="assets/sweetalert2.all.min.js"></script>
+    <style>
+      /* === ESTILOS BASE (ESCRITORIO) === */
+      body {
+        font-family: "Segoe UI", sans-serif;
+        text-align: center;
+        margin: 0;
+        background: linear-gradient(to bottom, #fffbe6, #fff3b0);
+      }
+
+      header {
+        background-color: #ffcc00;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      header .logo {
+        height: 150px;
+        max-width: 100%;
+      }
+
+      header h1 {
+        flex: 1;
+        text-align: center;
+        margin: 0;
+        font-size: 50px;
+        color: #333;
+        text-shadow: 1px 1px #fff;
+      }
+
+      .category-buttons {
+        margin: 20px;
+      }
+
+      .category-buttons button {
+        padding: 20px 40px;
+        margin: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        background-color: #ffcc00;
+        border: none;
+        border-radius: 12px;
+        color: #333;
+        font-weight: bold;
+        transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .category-buttons button:hover {
+        background-color: #ffb300;
+        transform: scale(1.08);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      #category-title {
+        font-size: 28px;
+        font-weight: bold;
+        margin-top: 20px;
+        color: #333;
+      }
+
+      .search-container {
+        display: none;
+        margin: 20px;
+      }
+
+      .search-container input {
+        padding: 10px;
+        font-size: 16px;
+        width: 160px;
+        text-align: center;
+        border: 2px solid #ffcc00;
+        border-radius: 6px;
+      }
+
+      .search-container button {
+        padding: 10px 15px;
+        font-size: 16px;
+        margin-left: 5px;
+        cursor: pointer;
+        background-color: #ffcc00;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        color: #333;
+        transition: background-color 0.3s;
+      }
+
+      .search-container button:hover {
+        background-color: #ffb300;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 10px;
+        max-width: 650px;
+        margin: 20px auto;
+        padding-bottom: 5rem;
+      }
+
+      .grid button {
+        padding: 20px;
+        font-size: 16px;
+        background-color: white;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        font-weight: bold;
+      }
+
+      .grid button:hover {
+        background-color: #ffeb99;
+        transform: scale(1.05);
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+      }
+
+      .modal-content {
+        background-color: #fffbe6;
+        padding: 30px;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 1000px;
+        text-align: center;
+        animation: fadeIn 0.3s ease-in-out;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        border: 4px solid #ffcc00;
+      }
+
+      #modalNumber {
+        font-size: 32px;
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 10px;
+      }
+
+      #modalWord {
+        font-size: 100px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #222;
+        word-wrap: break-word;
+      }
+
+      .modal-content button {
+        padding: 12px 25px;
+        margin: 10px;
+        font-size: 18px;
+        cursor: pointer;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+      }
+
+      .close-btn {
+        background-color: #ccc;
+      }
+
+      .close-btn:hover {
+        background-color: #bbb;
+      }
+
+      .play-btn {
+        background-color: #ffcc00;
+      }
+
+      .play-btn:hover {
+        background-color: #ffb300;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      footer {
+        background-color: #ffcc00;
+        color: #333;
+        font-weight: bold;
+        text-align: center;
+        padding: 15px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      /* === RESPONSIVE DESIGN === */
+      @media (max-width: 900px) {
+        header h1 {
+          font-size: 36px;
+        }
+        header .logo {
+          height: 100px;
+        }
+        .grid {
+          grid-template-columns: repeat(5, 1fr);
+        }
+        #modalWord {
+          font-size: 60px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        header {
+          flex-direction: column;
+          text-align: center;
+        }
+        header h1 {
+          font-size: 28px;
+        }
+        header .logo {
+          height: 80px;
+        }
+        .category-buttons button {
+          font-size: 18px;
+          padding: 15px 25px;
+        }
+        .grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        #modalWord {
+          font-size: 40px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src="assets/img/bee.png" alt="Abeja" class="logo" />
+      <h1>Spelling Bee</h1>
+      <img
+        src="assets/img/Misael Pastrana PNG.png"
+        alt="Logo Colegio"
+        class="logo"
+      />
+    </header>
+
+    <div class="category-buttons">
+      <button onclick="loadCategory('A')">Categoría A</button>
+      <button onclick="loadCategory('B')">Categoría B</button>
+    </div>
+
+    <div id="category-title"></div>
+
+    <div id="search-container" class="search-container">
+      <input
+        type="number"
+        id="search-number"
+        placeholder="Número"
+        min="1"
+        max="100"
+      />
+      <button onclick="searchWord()">Buscar</button>
+    </div>
+
+    <div id="grid-container" class="grid"></div>
+
+    <div id="wordModal" class="modal">
+      <div class="modal-content">
+        <div id="modalNumber">Número</div>
+        <h2 id="modalWord">Palabra</h2>
+        <button class="play-btn" onclick="playAudio()">🔊 Reproducir</button>
+        <button class="close-btn" onclick="closeModal()">Cerrar</button>
+      </div>
+    </div>
+
+    <footer>
+      &copy; Institución Educativa Misael Pastrana Borrero, sede Misael Pastrana
+      Borrero <br />
+      <span id="year"></span> | Hora: <span id="time"></span>
+    </footer>
+
+    <script>
+      const categoryA = [
+        "apple",
+        "banana",
+        "cat",
+        "dog",
+        "elephant",
+        "fish",
+        "grape",
+        "hat",
+        "ice",
+        "jungle",
+      ];
+      const categoryB = [
+            "AGREEMENT", "DYNAMITE", "JUPITER", "PROSPECTOR", "ANGULAR", "EMOTION", "KNOWLEDGE", "PROSPEROUS",
+            "ANNOUNCE", "ENGAGEMENT", "LATENCY", "PSYCHIC", "APOCALYPSE", "ENTERTAINMENT", "LUCRATIVE", "PURIFICATION",
+            "ARCHERY", "EQUILIBRIUM", "MICROORGANISM", "QUESTIONNAIRE", "ATMOSPHERE", "ESTABLISHMENT", "MULTITUDE", "RECRUIT",
+            "AUDITORIUM", "EXHIBITION", "MUSCLE", "RELUCTANT", "AWARENESS", "EXPOSURE", "MYSTERIOUS", "SAUCE",
+            "BISCUIT", "EXTERMINATE", "NUMEROLOGY", "SCULPTURE", "BUDGET", "EXTINGUISH", "OPPORTUNITY", "SEATBELT",
+            "CAFFEINE", "FANTASY", "OVERWEIGHT", "SKATEBOARDING", "CALORIES", "FLIGHT", "OYSTER", "SOLITAIRE",
+            "CHILDHOOD", "FLUENCY", "PASSAGE", "SOUNDTRACK", "CITIZENSHIP", "FORECAST", "PASSWORD", "SUFFICIENCY",
+            "COARSE", "FORGIVENESS", "POSSESSION", "SUPREMACY", "CONFESS", "GEESE", "PUNISHMENT", "SWALLOW",
+            "CORPULENT", "GEOGRAPHY", "SKYSCRAPER", "SWIMMER", "COURAGE", "GLASSES", "PEACEKEEPER", "SYLLABUS",
+            "CREATURE", "GLOVES", "PERCEPTIBLE", "SYMPATHY", "CRIMINAL", "GRAVITY", "PITCH", "TERRITORY",
+            "CROCODILE", "GUILTY", "PLAGIARISM", "THUNDERSTORM", "CRYSTAL", "HERITAGE", "PRELIMINARY", "UNFORGETTABLE",
+            "CYBERSPACE", "HESITATE", "PROCEDURE", "VEGETARIAN", "DEFENSE", "ILLEGAL", "PRODIGIOUS", "VENUE",
+            "DISPOSITION", "INDOLENT", "PROFILE", "WARRIOR"
+        ];
+
+
+      let currentCategory = [];
+      let selectedCategory = "";
+      let currentAudio = null;
+
+      function loadCategory(category) {
+        selectedCategory = category;
+        currentCategory = category === "A" ? categoryA : categoryB;
+
+        Swal.fire({
+          icon: "info",
+          title: `Has seleccionado Categoría ${category}`,
+          confirmButtonColor: "#ffcc00",
+          color: "#333",
+          background: "#fffbe6",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        });
+
+        document.getElementById(
+          "category-title"
+        ).textContent = `Categoría ${category}`;
+        document.getElementById("search-container").style.display = "block";
+
+        const gridContainer = document.getElementById("grid-container");
+        gridContainer.innerHTML = "";
+
+        const totalButtons = category === "B" ? 100 : 60;
+        for (let i = 1; i <= totalButtons; i++) {
+          const btn = document.createElement("button");
+          btn.textContent = i;
+          btn.onclick = () => showWord(i - 1);
+          gridContainer.appendChild(btn);
+        }
+      }
+
+      function showWord(index) {
+        if (!currentCategory[index]) {
+          Swal.fire({
+            icon: "warning",
+            text: "No hay palabra asignada para este número.",
+            confirmButtonColor: "#ffcc00",
+            background: "#fffbe6",
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+          });
+          return;
+        }
+        document.getElementById("modalNumber").textContent = `#${index + 1}`;
+        document.getElementById("modalWord").textContent =
+          currentCategory[index];
+        currentAudio = new Audio(
+          `assets/audios/${selectedCategory}_${index + 1}.mp3`
+        );
+        document.getElementById("wordModal").style.display = "flex";
+      }
+
+      function playAudio() {
+        if (currentAudio) {
+          currentAudio.play().catch(() => {
+            Swal.fire({
+              icon: "error",
+              text: "No se encontró el audio para esta palabra.",
+              confirmButtonColor: "#ffcc00",
+              background: "#fffbe6",
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+            });
+          });
+        }
+      }
+
+      function closeModal() {
+        document.getElementById("wordModal").style.display = "none";
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+        }
+      }
+
+      function searchWord() {
+        const num = parseInt(document.getElementById("search-number").value);
+        const maxNum = selectedCategory === "B" ? 100 : 60;
+        if (isNaN(num) || num < 1 || num > maxNum) {
+          Swal.fire({
+            icon: "warning",
+            text: `Ingresa un número válido entre 1 y ${maxNum}.`,
+            confirmButtonColor: "#ffcc00",
+            background: "#fffbe6",
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+          });
+          return;
+        }
+        showWord(num - 1);
+      }
+
+      window.onclick = function (event) {
+        if (event.target == document.getElementById("wordModal")) {
+          closeModal();
+        }
+      };
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      function updateTime() {
+        const options = {
+          timeZone: "America/Bogota",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        };
+        const formatter = new Intl.DateTimeFormat("es-CO", options);
+        document.getElementById("time").textContent = formatter.format(
+          new Date()
+        );
+      }
+
+      setInterval(updateTime, 1000);
+      updateTime();
+    </script>
+  </body>
+</html>
